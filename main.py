@@ -55,7 +55,6 @@ def skip_animation():
     
 
 def capture_team_info():
-    skip_animation()
     time.sleep(5)   # delays for 5 seconds.
 
     # choose the correct
@@ -74,12 +73,21 @@ def create_team(team_info_json):
     pokemon_json = team_info_json['side']['pokemon']       
     return Team(pokemon_json)
 
+def make_move_DUMB():
+    skip_animation()
+    wait_for_element(By.NAME, 'chooseMove', 60)
+    accept_challenge_button = browser.find_elements_by_name('chooseMove')
+    print(accept_challenge_button)
+    accept_challenge_button[0].click()    
+    
+    
 def main():
     login(username)
     wait_for_challenge()
     team_info_json = capture_team_info()
     team = create_team(team_info_json)
-    team.team_summary() 
+    team.team_summary()
+    make_move_DUMB()
 
     
 if __name__ == '__main__':
