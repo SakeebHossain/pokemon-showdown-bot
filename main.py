@@ -56,9 +56,11 @@ def skip_animation():
 
 def capture_team_info():
     skip_animation()
-    #time.sleep(5)   # delays for 5 seconds.
-    raw_team_info_string = (browser.get_log('browser'))[20]  # NOTE: this seems to fail if I challenge before the client loads
-    
+    time.sleep(5)   # delays for 5 seconds.
+
+    # choose the correct
+    raw_team_info_string = [log for log in browser.get_log('browser') if 'baseAbility' in log['message']][0] # NOTE: this seems to fail if I challenge before the client loads
+    print(raw_team_info_string)
     team_info_string = (raw_team_info_string['message'].split("request|"))[-1]
     team_info_string = team_info_string.replace("\\", "")
     team_info_string = unicodedata.normalize('NFKD', team_info_string).encode('ascii','ignore')
